@@ -1,7 +1,5 @@
-//const item_container = document.querySelector('.item-container'); // чтобы это сработало, надо в отдельную функцию иметь
 const items = document.querySelector('.items');
 const li = document.querySelectorAll('.items li');
-//const product_weight = document.querySelector('.product-weight');
 
 
 function updateProductDescription(productDescription) {
@@ -18,13 +16,12 @@ function fixText(val, correct_forms) {
   return `${val} ${correct_forms[2]}`;
 }
 
+
 function choiceCart(val) {
   val.forEach(el => {
-    if(el.id) {
-      document.querySelectorAll('.item-container')[el.id - 1].classList.add('active');
-      document.querySelectorAll('.product-weight')[el.id - 1].classList.add('active');
-    }
-  })
+    document.querySelectorAll('.item-container')[el.id - 1].classList.add('active');
+    document.querySelectorAll('.product-weight')[el.id - 1].classList.add('active');
+  });
 }
 
 
@@ -92,66 +89,14 @@ function getInfo(productsInfo) {
 }
 
 
-// надо это безобразие перенести в функцию, хотя хз как, там ж много parentElement
+function switchClass(target) {
+  document.querySelectorAll('.item-container')[+target.closest(".item").id.match(/\d+/g) - 1].classList.toggle('active');
+  document.querySelectorAll('.product-weight')[+target.closest(".item").id.match(/\d+/g) - 1].classList.toggle('active');
+}
+
+
 function makeChoice(el) {
-    el.addEventListener('click', function(e) {
-    if(e.target.tagName === 'SPAN' && e.target.parentElement.className === 'product-description') {
-      if(document.querySelectorAll('.item-container')[+e.target.parentElement.parentElement.id.match(/\d+/g) - 1].classList.value.includes('active') === true) {
-        document.querySelectorAll('.item-container')[+e.target.parentElement.parentElement.id.match(/\d+/g) - 1].classList.remove("active");
-        document.querySelectorAll('.product-weight')[+e.target.parentElement.parentElement.id.match(/\d+/g) - 1].classList.remove("active");
-      }
-      else {
-        document.querySelectorAll('.item-container')[+e.target.parentElement.parentElement.id.match(/\d+/g) - 1].classList.add('active');
-        document.querySelectorAll('.product-weight')[+e.target.parentElement.parentElement.id.match(/\d+/g) - 1].classList.add('active');
-      }
-    }
-    else if( (e.target.tagName === 'P' || 
-        e.target.tagName === 'H3' || 
-        e.target.tagName === 'H5' || 
-        e.target.tagName === 'IMG') && e.target.className !== 'product-description') {
-      //item_container.classList.add('active'); // браузер не видет item_container, потому и ошибка
-      //document.querySelectorAll('.item-container')[1].classList.add('active'); // нужны idшники
-      //e.target.parentElement.id.match(/\d+/g)[0] // получение idшника
-      if(document.querySelectorAll('.item-container')[+e.target.parentElement.parentElement.parentElement.id.match(/\d+/g) - 1].classList.value.includes('active') === true) {
-        document.querySelectorAll('.item-container')[+e.target.parentElement.parentElement.parentElement.id.match(/\d+/g) - 1].classList.remove("active");
-        document.querySelectorAll('.product-weight')[+e.target.parentElement.parentElement.parentElement.id.match(/\d+/g) - 1].classList.remove("active");
-      }
-      else {
-        document.querySelectorAll('.item-container')[+e.target.parentElement.parentElement.parentElement.id.match(/\d+/g) - 1].classList.add('active');
-        document.querySelectorAll('.product-weight')[+e.target.parentElement.parentElement.parentElement.id.match(/\d+/g) - 1].classList.add('active');
-      }
-    }
-    else if(e.target.className === 'item-inner-container') {
-      if(document.querySelectorAll('.item-container')[+e.target.parentElement.parentElement.id.match(/\d+/g) - 1].classList.value.includes('active') === true) {
-        document.querySelectorAll('.item-container')[+e.target.parentElement.parentElement.id.match(/\d+/g) - 1].classList.remove("active");
-        document.querySelectorAll('.product-weight')[+e.target.parentElement.parentElement.id.match(/\d+/g) - 1].classList.remove("active");
-      }
-      else {
-      document.querySelectorAll('.item-container')[+e.target.parentElement.parentElement.id.match(/\d+/g) - 1].classList.add('active');
-      document.querySelectorAll('.product-weight')[+e.target.parentElement.parentElement.id.match(/\d+/g) - 1].classList.add('active');
-      }
-    }
-    else if(e.target.tagName === 'SPAN') {
-      if(document.querySelectorAll('.item-container')[+e.target.parentElement.parentElement.parentElement.parentElement.id.match(/\d+/g) - 1].classList.value.includes('active') === true) {
-        document.querySelectorAll('.item-container')[+e.target.parentElement.parentElement.parentElement.parentElement.id.match(/\d+/g) - 1].classList.remove("active");
-        document.querySelectorAll('.product-weight')[+e.target.parentElement.parentElement.parentElement.parentElement.id.match(/\d+/g) - 1].classList.remove("active");
-      }
-      else {
-      document.querySelectorAll('.item-container')[+e.target.parentElement.parentElement.parentElement.parentElement.id.match(/\d+/g) - 1].classList.add('active');
-      document.querySelectorAll('.product-weight')[+e.target.parentElement.parentElement.parentElement.parentElement.id.match(/\d+/g) - 1].classList.add('active');
-      }
-    }
-    else if(e.target.className.includes('item-container')) {
-      if(document.querySelectorAll('.item-container')[+e.target.parentElement.id.match(/\d+/g) - 1].classList.value.includes('active') === true) {
-        document.querySelectorAll('.item-container')[+e.target.parentElement.id.match(/\d+/g) - 1].classList.remove("active");
-        document.querySelectorAll('.product-weight')[+e.target.parentElement.id.match(/\d+/g) - 1].classList.remove("active");
-      }
-      else {
-      document.querySelectorAll('.item-container')[+e.target.parentElement.id.match(/\d+/g) - 1].classList.add('active');
-      document.querySelectorAll('.product-weight')[+e.target.parentElement.id.match(/\d+/g) - 1].classList.add('active');
-      }
-    }
-  });
+  el.addEventListener('click', e => switchClass(e.target));
 }
 
 
@@ -166,16 +111,8 @@ window.addEventListener('DOMContentLoaded', async() => {
   choiceCart([{id: 2}]);
   
   // кастом hover эффект
-  document.querySelectorAll('.item-inner-container').forEach(el => hoverEffect(el));
+  //document.querySelectorAll('.item-inner-container').forEach(el => hoverEffect(el));
   // выбор упаковки
-  document.querySelectorAll('.item').forEach(el => makeChoice(el));
+  document.querySelectorAll('.item-container').forEach(el => makeChoice(el));
+  document.querySelectorAll('.product-description span').forEach(el => makeChoice(el));
 });
-
-  
-  //items.addEventListener('click', e => console.log('hello')) // рабочий вариант
-
-  /*document.querySelectorAll('.item').forEach(el => {
-    el.addEventListener('click',function (e) {
-      console.log(e.target)
-    });
-  });*/ // рабочий вариант, клики по всем элементам li
