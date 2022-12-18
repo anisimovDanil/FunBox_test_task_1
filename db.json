@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "productTitle": "Сказочное заморское яство",
+    "productName": "Нямушка",
+    "productTaste": "с фуа-гра",
+    "countPortions": "5",
+    "present": "",
+    "productWeight": "0,5",
+    "productDescription": "Чего сидишь? Порадуй котэ, купи."
+  },
+  {
+    "id": 2,
+    "productTitle": "Сказочное заморское яство",
+    "productName": "Нямушка",
+    "productTaste": "с рыбой",
+    "countPortions": "35",
+    "present": "2",
+    "productWeight": "5",
+    "productDescription": "Головы щучьи с чесноком да свежайшая сёмгушка."
+  },
+  {
+    "id": 3,
+    "productTitle": "Сказочное заморское яство",
+    "productName": "Нямушка",
+    "productTaste": "с курой",
+    "countPortions": "",
+    "present": "5",
+    "productWeight": "10",
+    "productDescription": "Печалька, с курой закончился."
+  }
+]
