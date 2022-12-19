@@ -28,15 +28,16 @@ function choiceCart(val) {
 function checkWarehouse({id, productTaste, countPortions}) {
   if(countPortions === "" || countPortions === "0") { 
     document.querySelectorAll('.item-container')[id - 1].style.backgroundColor = '#B3B3B3';
+    document.querySelectorAll('.item-inner-container')[id - 1].classList.add('empty');
+    document.querySelectorAll('.present-note')[id - 1].style.display = "block";
     document.querySelectorAll('.product-weight')[id - 1].style.backgroundColor = '#B3B3B3';
     document.querySelectorAll('.product-description')[id - 1].style.color = "#FFFF66";
-    document.querySelectorAll('.item-inner-container')[id - 1].classList.add('empty');
     document.querySelectorAll('.product-description')[id - 1].innerHTML =  `Печалька, ${productTaste} закончился.`
   }
 }
 
 
-function hoverEffect(el) {
+/*function hoverEffect(el) {
   el.addEventListener('mouseout', () => {
     el.style.top = "0";
     el.style.left = "0";
@@ -52,7 +53,9 @@ function hoverEffect(el) {
     }
     setTimeout(backStyles, 2500);
   });
-}
+}*/
+//document.querySelectorAll('.item-inner-container')[+target.closest(".item").id.match(/\d+/g) - 1].classList.toggle('active');
+
 
 
 async function loadJSON() {
@@ -72,7 +75,7 @@ function createHTML({id, productTitle, productName, productTaste, countPortions,
           <h5 class="product-taste">${productTaste}</h5>
           <p class="count-portions">${fixText(countPortions, ['порция', 'порции', 'порций'])}</p>
           <p class="present">${fixText(present, ['мышь', 'мыши', 'мышей'])} в подарок</p>
-          <p class="present">заказчик доволен</p>
+          <p class="present-note">заказчик доволен</p>
           <p class="product-weight"><span>${productWeight}</span> кг</p>
           <img class="cat" src="imgs/cat.png" alt="">
         </div>
@@ -100,18 +103,47 @@ function makeChoice(el) {
 }
 
 
+function returnStyleContainer(el) {
+  document.querySelectorAll('.item-inner-container')[+el.closest(".item").id.match(/\d+/g) - 1].style.top = "4px";
+  document.querySelectorAll('.item-inner-container')[+el.closest(".item").id.match(/\d+/g) - 1].style.left = "4px";
+  document.querySelectorAll('.item-inner-container')[+el.closest(".item").id.match(/\d+/g) - 1].style.width = "261px";
+  document.querySelectorAll('.item-inner-container')[+el.closest(".item").id.match(/\d+/g) - 1].style.height = "472px";
+}
+
+function setStyleContainer(el) {
+  document.querySelectorAll('.item-inner-container')[+el.closest(".item").id.match(/\d+/g) - 1].style.top = "0";
+  document.querySelectorAll('.item-inner-container')[+el.closest(".item").id.match(/\d+/g) - 1].style.left = "0";
+  document.querySelectorAll('.item-inner-container')[+el.closest(".item").id.match(/\d+/g) - 1].style.width = "269px";
+  document.querySelectorAll('.item-inner-container')[+el.closest(".item").id.match(/\d+/g) - 1].style.height = "480px";
+  document.querySelectorAll('.item-inner-container')[+el.closest(".item").id.match(/\d+/g) - 1].style.transition = "all 1s";
+}
+
+
 window.addEventListener('DOMContentLoaded', async() => {
+
   // подгрузка данных из db.json
   const productsInfo = await loadJSON();
+
   // вывод данных на страницу
   getInfo(productsInfo);
+
   // проверка на наличие продуктов, если их нет, то будет "серая" упаковка
   productsInfo.forEach(el => checkWarehouse(el));
+
   // в задании второй элемент "красный", фича реализации
   choiceCart([{id: 2}]);
-  
+
   // кастом hover эффект
-  //document.querySelectorAll('.item-inner-container').forEach(el => hoverEffect(el));
+  document.querySelectorAll('.item-container').forEach(el => {
+    el.addEventListener('mouseover', e => {
+      if(e.target.closest(".item-container").classList.contains('item-container')) returnStyleContainer(el);
+    });
+    el.addEventListener('mouseout', e => {
+      if(e.target.closest(".item-container").classList.contains('item-container')) setStyleContainer(el)
+      setTimeout( () => returnStyleContainer(el), 2500);
+    });
+  });
+
   // выбор упаковки
   document.querySelectorAll('.item-container').forEach(el => makeChoice(el));
   document.querySelectorAll('.product-description span').forEach(el => makeChoice(el));

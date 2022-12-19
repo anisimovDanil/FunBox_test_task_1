@@ -28,8 +28,8 @@ body {
   background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url("imgs/pattern.png") border-box; /*rgba(0, 0, 0, 1);*/
 }
 
+
 .wrapper {
-  /*background: url("imgs/pattern.png") border-box black;*/
   width: 100%;
   max-width: 1280px;
   height: 680px;
@@ -38,6 +38,7 @@ body {
 .inner {
   font-size: 36px;
 }
+
 .title {
   font-family: "Exo2.0";
   padding-top: 36px;
@@ -45,6 +46,7 @@ body {
   padding-bottom: 24px;
   text-align: center;
 }
+
 .items {
   display: flex;
   justify-content: space-around;
@@ -98,9 +100,13 @@ body {
   margin-top: 15px;
 }
 .count-portions,
-.present {
+.present,
+.present-note {
   font-size: 14px;
   color: #666666;
+}
+.present-note {
+  display: none;
 }
 .product-weight {
   display: flex; 
@@ -133,11 +139,7 @@ body {
   text-align: center;
   margin-top: 14px;
   color: #FFFFFF;
-  /*position: absolute;
-  bottom: -32px;
-  left: 20%;*/
   font-size: 13px;
-  
 }
 .product-description span {
   cursor: pointer;
@@ -154,28 +156,6 @@ body {
   opacity: 0.5;
 }
 
-/*.item-container:hover {
-  background-color: #D91667;
-}
-.item-container:hover .product-weight {
-  background-color: #D91667;
-}
-
-.empty {
-  background-color: #B3B3B3;
-}
-.emptys {
-  background-color: #F2F2F2;
-}*/
-/*.cat {
-  opacity: 0.4;
-}*/
-/*
-фон - #F2F2F2
-weight and border - #B3B3B3
-text - #FFFF66
-
-*/
 
 /* планшеты */
 @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
