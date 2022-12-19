@@ -37,27 +37,6 @@ function checkWarehouse({id, productTaste, countPortions}) {
 }
 
 
-/*function hoverEffect(el) {
-  el.addEventListener('mouseout', () => {
-    el.style.top = "0";
-    el.style.left = "0";
-    el.style.width = "269px";
-    el.style.height = "480px";
-    el.style.transition = "all 1s";
-    
-    function backStyles() {
-      el.style.top = "4px";
-      el.style.left = "4px";
-      el.style.width = "261px";
-      el.style.height = "472px";
-    }
-    setTimeout(backStyles, 2500);
-  });
-}*/
-//document.querySelectorAll('.item-inner-container')[+target.closest(".item").id.match(/\d+/g) - 1].classList.toggle('active');
-
-
-
 async function loadJSON() {
   const res = await fetch('db.json');
   const productsInfo = await res.json();
@@ -92,31 +71,25 @@ function getInfo(productsInfo) {
 }
 
 
-function switchClass(target) {
+function switchActive(target) {
   document.querySelectorAll('.item-container')[+target.closest(".item").id.match(/\d+/g) - 1].classList.toggle('active');
   document.querySelectorAll('.product-weight')[+target.closest(".item").id.match(/\d+/g) - 1].classList.toggle('active');
 }
 
 
 function makeChoice(el) {
-  el.addEventListener('click', e => switchClass(e.target));
+  el.addEventListener('click', e => switchActive(e.target));
 }
 
 
-function returnStyleContainer(el) {
-  document.querySelectorAll('.item-inner-container')[+el.closest(".item").id.match(/\d+/g) - 1].style.top = "4px";
-  document.querySelectorAll('.item-inner-container')[+el.closest(".item").id.match(/\d+/g) - 1].style.left = "4px";
-  document.querySelectorAll('.item-inner-container')[+el.closest(".item").id.match(/\d+/g) - 1].style.width = "261px";
-  document.querySelectorAll('.item-inner-container')[+el.closest(".item").id.match(/\d+/g) - 1].style.height = "472px";
-}
-
-function setStyleContainer(el) {
-  document.querySelectorAll('.item-inner-container')[+el.closest(".item").id.match(/\d+/g) - 1].style.top = "0";
-  document.querySelectorAll('.item-inner-container')[+el.closest(".item").id.match(/\d+/g) - 1].style.left = "0";
-  document.querySelectorAll('.item-inner-container')[+el.closest(".item").id.match(/\d+/g) - 1].style.width = "269px";
-  document.querySelectorAll('.item-inner-container')[+el.closest(".item").id.match(/\d+/g) - 1].style.height = "480px";
+function setStyle(el, val_prop) {
+  document.querySelectorAll('.item-inner-container')[+el.closest(".item").id.match(/\d+/g) - 1].style.top = val_prop[0] + 'px';
+  document.querySelectorAll('.item-inner-container')[+el.closest(".item").id.match(/\d+/g) - 1].style.left = val_prop[1] + 'px';
+  document.querySelectorAll('.item-inner-container')[+el.closest(".item").id.match(/\d+/g) - 1].style.width = val_prop[2] + 'px';
+  document.querySelectorAll('.item-inner-container')[+el.closest(".item").id.match(/\d+/g) - 1].style.height = val_prop[3] + 'px';
   document.querySelectorAll('.item-inner-container')[+el.closest(".item").id.match(/\d+/g) - 1].style.transition = "all 1s";
 }
+
 
 
 window.addEventListener('DOMContentLoaded', async() => {
@@ -136,14 +109,15 @@ window.addEventListener('DOMContentLoaded', async() => {
   // кастом hover эффект
   document.querySelectorAll('.item-container').forEach(el => {
     el.addEventListener('mouseover', e => {
-      if(e.target.closest(".item-container").classList.contains('item-container')) returnStyleContainer(el);
+      if(e.target.closest(".item-container").classList.contains('item-container')) setStyle(el, [4, 4, 261, 472]);
     });
     el.addEventListener('mouseout', e => {
-      if(e.target.closest(".item-container").classList.contains('item-container')) setStyleContainer(el)
-      setTimeout( () => returnStyleContainer(el), 2500);
+      if(e.target.closest(".item-container").classList.contains('item-container') && 
+        !el.childNodes[1].classList.contains('empty')) setStyle(el, [0, 0, 269, 480]);
+      setTimeout( () => setStyle(el, [4, 4, 261, 472]), 1500);
     });
   });
-
+  
   // выбор упаковки
   document.querySelectorAll('.item-container').forEach(el => makeChoice(el));
   document.querySelectorAll('.product-description span').forEach(el => makeChoice(el));
